@@ -15,7 +15,7 @@ if(!cached) {
   cached = global.mongooseCache = { conn: null, promise: null};
 }
 
-export const connectToDatabase = async() => {
+export const connectToDatabase = async():Promise<typeof mongoose> => {
   if (!MONGO_URL) throw new Error("MONGODB_URL must be set with .env")
   if (cached.conn) return cached.conn;
   if (!cached.promise) {
@@ -28,4 +28,5 @@ export const connectToDatabase = async() => {
     throw error;
   }
  console.log(`Connected to database ${process.env.NODE_ENV} - ${MONGO_URL}`)
+ return cached.conn!
 }
