@@ -8,24 +8,22 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { useRouter } from 'next/navigation';
 import { LogOut } from 'lucide-react';
 import NavItems from './NavItems';
+import { signOut } from '@/lib/actions/auth.action';
 
-const UserDropdown = () => {
+const UserDropdown = ({user}: {user:User}) => {
   const router = useRouter();
   const handleSignOut = async() => {
-    router.push("/sign-in")
+    await signOut();
+    router.push("/sign-in");
   } 
 
-  const user  =  {
-    name: "John",
-    email: 'contact@gmail.com'
-  }
   return (
    <DropdownMenu>
      <DropdownMenuTrigger>
       <Button variant="ghost" className="flex items-center gap-3 text-gray-400 hover:bg-yellow-500 cursor-pointer">
         <Avatar className='h-8 w-8'>
           <AvatarImage src="https://github.com/shadcn.png"/>
-          <AvatarFallback className='bg-yellow-500 text-yellow-900 font-bold text-sm '>{user.name[0]}</AvatarFallback>
+          <AvatarFallback className='bg-yellow-500 text-yellow-900 font-bold text-sm '>{user.name}</AvatarFallback>
         </Avatar>
         <div className="hidden md:flex flex-col items-center">
           <span className='text-base font-medium text-gray-400'>{user.name}</span>
